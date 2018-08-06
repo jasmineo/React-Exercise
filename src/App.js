@@ -99,33 +99,21 @@ const movies = {
 const usersProfile = profiles.map((profile, i) => <li key={i}>{profile.userID}</li>)
 
 class App extends Component {
-  render() {
+  render() {    
 	return (<div>
-       	{/*
-        <ul>
-           <h1>Movie list</h1>
-          {Object.keys(movies).map(function(movie, index){
-              return <li key={ index }>{movies[movie].name}</li>;
-          })}
-        </ul>
-
-		<ul>
-           <h1>User list</h1>
-          {Object.keys(users).map(function(user, index){
-              return <li key={ index }>{users[user].name}</li>;
-          })}
-        </ul>
-        */}
-
       <ul>
           <h1>Users fav moview</h1>
-           {profiles.map(profile => { return (
+           {profiles.map(profile => { 
+            
+            const userName = users[profile.userID].name
+   			const movieName = movies[profile.favoriteMovieID].name
+            
+            return (
               <li key={profile.id}>
-                  {users[profile.userID].name}'s favorite movie is {movies[profile.favoriteMovieID].name}.
+				{`${userName}\'s favorite movie is "${movieName}".`}
               </li>);
             })}
       </ul>
-
 	</div>)
 	}
 }

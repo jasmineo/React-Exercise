@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import MovieCard from './MovieCard';
 
-const MovieCardsList = ({profiles, users, movies}) => {
-    /*
-  Destructuring via ES6. We're getting the profiles, users, and movies properties
-  off of the pros passed into this presentational component. If you need a refresher on this syntax, check
-  out this course: https://www.udacity.com/course/es6-javascript-improved--ud356
-  */
-
+const MovieCardsList = ({profiles = [], users = {}, movies = {}}) => {
     const usersByMovie = {};
 
     profiles.forEach(profile => {
@@ -29,9 +23,6 @@ const MovieCardsList = ({profiles, users, movies}) => {
       />
     ));
 
-    /*
-    Return JSX
-    */
     return <ul>{movieCards}</ul>;
   };
 

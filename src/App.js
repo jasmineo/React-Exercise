@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import logo from './logo.svg';
 import './App.css';
 
 /*
-Use React and the data below to display a list of users alongside their favorite movies.
+Display a list of movies where each movie contains a list of users that favorited it.
 
 For detailed instructions, refer to instructions.md.
 */
@@ -40,10 +41,11 @@ const profiles = [
   },
 ];
 
+// eslint-disable-next-line
 const users = {
   1: {
     id: 1,
-    name: 'Jane Cruz',
+    name: 'Jane Jones',
     userName: 'coder',
   },
   2: {
@@ -57,7 +59,7 @@ const users = {
     userName: 'user123',
   },
   4: {
-    id: 4,
+    id: 3,
     name: 'John Doe',
     userName: 'user123',
   },
@@ -73,10 +75,11 @@ const users = {
   },
 };
 
+// eslint-disable-next-line
 const movies = {
   1: {
     id: 1,
-    name: 'Planet Earth 1',
+    name: 'Planet Earth',
   },
   2: {
     id: 2,
@@ -96,38 +99,55 @@ const movies = {
   },
 };
 
-const usersProfile = profiles.map((profile, i) => <li key={i}>{profile.userID}</li>)
-
 class App extends Component {
+  // eslint-disable-next-line
+   constructor(props) {
+   		super(props);
+     	this.peopleWhoLikedAMovie = {};
+     
+   this.likedMovies = profiles.map(item => Number(item.favoriteMovieID))
+}
+
   render() {
-	return (<div>
-       	{/*
-        <ul>
-           <h1>Movie list</h1>
-          {Object.keys(movies).map(function(movie, index){
-              return <li key={ index }>{movies[movie].name}</li>;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">ReactND - Coding Practice</h1>
+        </header>
+        <h2>How Popular is Your Favorite Movie?</h2>
+		      {Object.keys(movies).map(key => {
+            const movie = movies[key]
+            const liked = this.likedMovies.indexOf(movie.id) === -1 ? false : true;
+            return (
+              <div key={movie.id}>
+                <h2>{movie.name}</h2>
+				        {liked ? (
+                 <div>
+                   <p>Liked By:</p>
+                   <ul>
+                      {profiles.filter(item => Number(item.favoriteMovieID) === movie.id).map(item => {
+                        const listOfUsers = [];
+                        Object.keys(users).forEach(key => {
+                          const user = users[key]
+                          if(user.id === Number(item.userID)){
+                            listOfUsers.push(<li key={user.name}>{user.name}</li>);
+                          }
+						            })
+                      	return listOfUsers;
+                      })}
+                   </ul>
+                 </div>
+                 ) : (
+                 	<p>None of the current users liked this movie.</p>
+                 )
+				        }
+              </div>
+            );
           })}
-        </ul>
-
-		<ul>
-           <h1>User list</h1>
-          {Object.keys(users).map(function(user, index){
-              return <li key={ index }>{users[user].name}</li>;
-          })}
-        </ul>
-        */}
-
-      <ul>
-          <h1>Users fav moview</h1>
-           {profiles.map(profile => { return (
-              <li key={profile.id}>
-                  {users[profile.userID].name}'s favorite movie is {movies[profile.favoriteMovieID].name}.
-              </li>);
-            })}
-      </ul>
-
-	</div>)
-	}
+      </div>
+    );
+  }
 }
 
 export default App;

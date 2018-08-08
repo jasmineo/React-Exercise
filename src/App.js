@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-/*
-Display a list of movies where each movie contains a list of users that favorited it.
-
-For detailed instructions, refer to instructions.md.
-*/
+import MovieCardsList from './MovieCardsList';
 
 const profiles = [
   {
@@ -41,7 +36,6 @@ const profiles = [
   },
 ];
 
-// eslint-disable-next-line
 const users = {
   1: {
     id: 1,
@@ -50,7 +44,7 @@ const users = {
   },
   2: {
     id: 2,
-    name: 'Matthew Johnson',
+    name: 'Matthew Page',
     userName: 'mpage',
   },
   3: {
@@ -65,7 +59,7 @@ const users = {
   },
   5: {
     id: 5,
-    name: 'Lauren Carlson',
+    name: 'Lauren Johnson',
     userName: 'user123',
   },
   6: {
@@ -75,11 +69,10 @@ const users = {
   },
 };
 
-// eslint-disable-next-line
 const movies = {
   1: {
     id: 1,
-    name: 'Planet Earth',
+    name: 'Planet Earth 1',
   },
   2: {
     id: 2,
@@ -99,55 +92,15 @@ const movies = {
   },
 };
 
-class App extends Component {
-  // eslint-disable-next-line
-   constructor(props) {
-   		super(props);
-     	this.peopleWhoLikedAMovie = {};
-     
-   this.likedMovies = profiles.map(item => Number(item.favoriteMovieID))
-}
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">ReactND - Coding Practice</h1>
-        </header>
-        <h2>How Popular is Your Favorite Movie?</h2>
-		      {Object.keys(movies).map(key => {
-            const movie = movies[key]
-            const liked = this.likedMovies.indexOf(movie.id) === -1 ? false : true;
-            return (
-              <div key={movie.id}>
-                <h2>{movie.name}</h2>
-				        {liked ? (
-                 <div>
-                   <p>Liked By:</p>
-                   <ul>
-                      {profiles.filter(item => Number(item.favoriteMovieID) === movie.id).map(item => {
-                        const listOfUsers = [];
-                        Object.keys(users).forEach(key => {
-                          const user = users[key]
-                          if(user.id === Number(item.userID)){
-                            listOfUsers.push(<li key={user.name}>{user.name}</li>);
-                          }
-						            })
-                      	return listOfUsers;
-                      })}
-                   </ul>
-                 </div>
-                 ) : (
-                 	<p>None of the current users liked this movie.</p>
-                 )
-				        }
-              </div>
-            );
-          })}
-      </div>
-    );
-  }
-}
+const App = ({profiles, movies, users}) => (
+  <div>
+    <header className="App-header">
+      <img src={logo} className="App-logo" alt="logo" />
+      <h1 className="App-title">ReactND - Coding Practice</h1>
+    </header>
+    <h1>How Popular is Your Favorite Movie?</h1>
+    <MovieCardsList profiles={profiles} movies={movies} users={users} />
+  </div>
+);
 
 export default App;

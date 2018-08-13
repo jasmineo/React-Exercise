@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import MovieCard from './MovieCard';
 
-const MovieCardsList = ({profiles = [], users = {}, movies = {}}) => {
+function MovieCardsList (props) {
     const usersByMovie = {};
 
-    profiles.forEach(profile => {
+    props.profiles.forEach(profile => {
       const movieID = profile.favoriteMovieID;
 
       if (usersByMovie[movieID]) {
@@ -14,12 +14,12 @@ const MovieCardsList = ({profiles = [], users = {}, movies = {}}) => {
       }
     });
 
-    const movieCards = Object.keys(movies).map(id => (
+    const movieCards = Object.keys(props.movies).map(id => (
       <MovieCard
         key={id}
-        users={users}
+        users={props.users}
         usersWhoLikedMovie={usersByMovie[id]}
-        movieInfo={movies[id]}
+        movieInfo={props.movies[id]}
       />
     ));
 
